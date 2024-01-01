@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+/* Personalizando o ícone do filtro */
+.ant-table-filter-trigger-container:hover .ant-table-filter-trigger {
+    color: #1890ff; /* Altere a cor conforme necessário */
+  }
+  
+  /* Personalizando o contêiner do filtro ativo */
+  .ant-table-filter-selected {
+    background-color: #f0f0f0; /* Altere a cor conforme necessário */
+  }
+  
+  /* Personalizando os itens da lista de filtro */
+  .ant-dropdown-menu-item:hover {
+    background-color: #e6f7ff; /* Altere a cor conforme necessário */
+  }
+  
+  /* Personalizando a borda do filtro */
+  .ant-table-filter-dropdown {
+    border: 1px solid #d9d9d9; /* Altere a cor conforme necessário */
+  }
+  
+  /* Personalizando os botões 'Confirmar' e 'Reiniciar' no filtro */
+  .ant-table-filter-dropdown-btns {
+    margin-top: 8px; /* Ajuste conforme necessário */
+  }
+  
+  /* Personalizando o botão 'Confirmar' */
+  .ant-table-filter-dropdown-btns .ant-btn-primary {
+    background-color: #ff1861; /* Altere a cor conforme necessário */
+    border-color: #1890ff; /* Altere a cor conforme necessário */
+  }
+  
+  /* Personalizando o botão 'Reiniciar' */
+  .ant-table-filter-dropdown-btns .ant-btn-default {
+    color: #1890ff; /* Altere a cor conforme necessário */
+  }
+  
