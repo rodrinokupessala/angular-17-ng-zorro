@@ -1,33 +1,37 @@
-<!-- seu-componente.component.html -->
+ 
+<form nz-form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+  <div nz-row [nzGutter]="8">
+    <div *ngFor="let field of fields"   nz-col nzSpan="{{field.col_md || 12}}">
+      <nz-form-item>
+        <nz-form-label>{{field?.label}}</nz-form-label>
+        <nz-form-control>
+          <ng-container [ngSwitch]="field.element_type">
+            <input *ngSwitchCase="'input'"  nz-input [formControlName]="field.field">
+           <div *ngIf="field.isFilter">
+            <p>Filtro necessário</p>
+            <nz-select *ngSwitchCase="'select'" [formControlName]="field.field" nzAllowClear  >
+                <nz-option *ngFor="let option of   field.listSelect " [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+              </nz-select>
+           </div>
+    
+           <div *ngIf="!field.isFilter">
+            <nz-select *ngSwitchCase="'select'" [formControlName]="field.field" nzAllowClear (ngModelChange)="getFilteredOptions($event, field)">
+                <nz-option *ngFor="let option of field.listSelect" [nzValue]="option.id" [nzLabel]="option.name" ></nz-option>
+              </nz-select>
+           </div>
+      
+            <div *ngIf="dynamicForm?.get(field.field)?.invalid && dynamicForm?.get(field.field)?.touched">
+              <div *ngIf="dynamicForm?.get(field.field)?.hasError('required') || dynamicForm?.get(field.field)?.hasError('pattern')">Campo obrigatório</div>
+    
+              <div *ngIf="dynamicForm?.get(field.field)?.hasError('minlength')">Mínimo de {{ field.min }} caracteres</div>
+              <div *ngIf="dynamicForm?.get(field.field)?.hasError('maxlength')">Máximo de {{ field.max }} caracteres</div>
+              <!-- Adicione mais validações conforme necessário -->
+            </div>
+          </ng-container>
+        </nz-form-control>
+      </nz-form-item>
+    </div>   </div>
 
-<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
-    <div *ngFor="let field of fields" class="col-md-{{field.col_md || 12}}">
-      <label>{{ field.label }}</label>
-  
-      <ng-container [ngSwitch]="field.element_type">
-        <input *ngSwitchCase="'input'"  nz-input [formControlName]="field.field">
-       <div *ngIf="field.isFilter">
-        <p>Filtro necessário</p>
-        <nz-select *ngSwitchCase="'select'" [formControlName]="field.field" nzAllowClear  >
-            <nz-option *ngFor="let option of   field.listSelect " [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
-          </nz-select>
-       </div>
-
-       <div *ngIf="!field.isFilter">
-        <nz-select *ngSwitchCase="'select'" [formControlName]="field.field" nzAllowClear (nzBlur)="getFilteredOptions(field)">
-            <nz-option *ngFor="let option of field.listSelect" [nzValue]="option.id" [nzLabel]="option.name" ></nz-option>
-          </nz-select>
-       </div>
-  
-        <div *ngIf="dynamicForm?.get(field.field)?.invalid && dynamicForm?.get(field.field)?.touched">
-          <div *ngIf="dynamicForm?.get(field.field)?.hasError('required')">Campo obrigatório</div>
-          <div *ngIf="dynamicForm?.get(field.field)?.hasError('minlength')">Mínimo de {{ field.min }} caracteres</div>
-          <div *ngIf="dynamicForm?.get(field.field)?.hasError('maxlength')">Máximo de {{ field.max }} caracteres</div>
-          <!-- Adicione mais validações conforme necessário -->
-        </div>
-      </ng-container>
-    </div>
-  
-    <button nzType="primary" type="submit" [disabled]="dynamicForm?.invalid">Enviar</button>
-  </form>
-  
+ 
+</form>
+ 

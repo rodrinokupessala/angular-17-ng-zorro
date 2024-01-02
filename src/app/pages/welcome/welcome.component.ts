@@ -3,6 +3,7 @@ import { DynamicTableComponent, HeaderTable } from '../../component/shared/dynam
 import { CommonModule } from '@angular/common';
 import { DATA_TABLE_TEST } from './data';
 import { DynamicFormComponent, Field } from '../../component/shared/dynamic-form/dynamic-form.component';
+import { ValidationsGeneralService } from '../../services/base/validations-general.service';
 
 @Component({
   selector: 'app-welcome',
@@ -87,7 +88,23 @@ export class WelcomeComponent implements OnInit {
  ];
 
  fields: Field[] = [
-   
+  { 
+    id: 1, 
+    field: 'telefone', 
+    label: 'Terminal telefónico', 
+    min: 1, 
+    max: 15, 
+    pattern: this.validationService.phoneValidationPattern().toString(), 
+    type: 'number', 
+    element_type:'input',
+    listSelect: [], 
+    required: true, 
+    error_required: "Por favor informe o terminal", 
+    col_md: 12, 
+    value: 0, 
+    isFilter: false, 
+    filterBy: '' // Campo usado para filtrar
+  },
     
   { 
     id: 3, 
@@ -116,17 +133,55 @@ export class WelcomeComponent implements OnInit {
     type: 'number', 
     element_type:'select',
     listSelect: [], 
-    listBeforeSelect: [{ id: 1, name: 'Humbo'},{ id: 2, name: 'Benguela', }], 
+    listBeforeSelect: [{ id: 1, name: 'Humbo',parent:1},{ id: 2, name: 'Benguela',parent:2 }], 
     required: true, 
     error_required: "Por favor informe o id da província", 
     col_md: 12, 
     value: 0, 
     isFilter: true, 
     filterBy: 'pais_id' // Campo usado para filtrar
+  },
+  { 
+    id: 4, 
+    field: 'curso_id', 
+    label: 'Curso', 
+    min: 1, 
+    max: 10, 
+    pattern: '', 
+    type: 'number', 
+    element_type:'select',
+    listSelect: [{ id: 1, name: 'Direito',parent:1},{ id: 2, name: 'Psicologia',parent:2 }], 
+    listBeforeSelect: [], 
+    required: true, 
+    error_required: "Por favor informe o id da província", 
+    col_md: 12, 
+    value: 0, 
+    isFilter: false, 
+    filterBy: 'turma_id' // Campo usado para filtrar
+  },
+  { 
+    id: 4, 
+    field: 'turma_id', 
+    label: 'Turma', 
+    min: 1, 
+    max: 10, 
+    pattern: '', 
+    type: 'number', 
+    element_type:'select',
+    listSelect: [], 
+    listBeforeSelect: [{ id: 1, name: 'A2',parent:1},{ id: 2, name: 'A1',parent:2 }], 
+    required: true, 
+    error_required: "Por favor informe o id da província", 
+    col_md: 12, 
+    value: 0, 
+    isFilter: true, 
+    filterBy: 'curso_id' // Campo usado para filtrar
   }
   // Adicione outros campos conforme necessário
 ];
+constructor(private validationService:ValidationsGeneralService){
 
+}
  ngOnInit(): void {
  }
  
